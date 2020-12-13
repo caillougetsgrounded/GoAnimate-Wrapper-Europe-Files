@@ -2,61 +2,50 @@
 	<header>
 		<div>
 			<div>
-				<a href="./"><img src="logo.png" /></a>
-				<span>VERSIÖN</span>
+				<a><img src="logo.png"></a>
+				<span>1.2.7⅝</span><a href="./listdark.html"><span id="dark"></span></a>
 			</div>
 			<div>
 				<a class="button_small" onclick="document.getElementById('file').click()">UPLOAD A MOVIE</a>
 				<div class="char_dropdown button_small">
 					<div>CREATE A CHARACTER</div>
 					<menu>
-						<a href="/cc?themeId=family&bs=adam">Adam</a>
-						<a href="/cc?themeId=family&bs=eve">Eve</a>
-						<a href="/cc?themeId=family&bs=bob">Bob</a>
-						<a href="/cc?themeId=family&bs=rocky">Rocky</a>
+						<a href="/cc?themeId=family&amp;bs=adam">Adam</a>
+						<a href="/cc?themeId=family&amp;bs=eve">Eve</a>
+						<a href="/cc?themeId=family&amp;bs=bob">Bob</a>
+						<a href="/cc?themeId=family&amp;bs=rocky">Rocky</a>
 						<div></div>
 						<!--
 						<a href="/cc?themeId=business&bs=default">Business</a>
 						<a href="/cc?themeId=business&bs=heavy">Heavy</a>
 						<a href="/cc?themeId=business&bs=kid">Kid</a>
 						<div></div>
-						<a href="/cc?themeId=whiteboard&bs=default">Whiteboard</a>
-						<a href="/cc?themeId=whiteboard&bs=kid">Whiteboard (Kid)</a>
-						<div></div>
 						-->
-						<a href="/cc?themeId=anime&bs=guy">Guy (Anime)</a>
-						<a href="/cc?themeId=anime&bs=girl">Girl (Anime)</a>
+						<a href="/cc?themeId=whiteboard&amp;bs=default">Whiteboard</a>
+						<a href="/cc?themeId=whiteboard&amp;bs=kid">Whiteboard (Kid)</a>
 						<div></div>
-						<a href="/cc?themeId=ninjaanime&bs=guy">Guy (Ninja Anime)</a>
-						<a href="/cc?themeId=ninjaanime&bs=girl">Girl (Ninja Anime)</a>
+						<a href="/cc?themeId=anime&amp;bs=guy">Guy (Anime)</a>
+						<a href="/cc?themeId=anime&amp;bs=girl">Girl (Anime)</a>
 						<div></div>
-						<a href="/cc?themeId=cc2&bs=default">Lil' Peepz</a>
+						<a href="/cc?themeId=ninjaanime&amp;bs=guy">Guy (Ninja Anime)</a>
+						<a href="/cc?themeId=ninjaanime&amp;bs=girl">Girl (Ninja Anime)</a>
 						<div></div>
-						<a href="/cc?themeId=chibi&bs=default">Chibi Peepz</a>
+						<a href="/cc?themeId=cc2&amp;bs=default">Lil Peepz</a>
 						<div></div>
-						<a href="/cc?themeId=ninja&bs=default">Chibi Ninjas</a>
-					</menu>
-				</div>
-				<div class="char_dropdown button_small">
-					<div>BROWSE CHARACTERS</div>
-					<menu>
-						<a href="/cc_browser?themeId=family">Comedy World</a>
-						<a href="/cc_browser?themeId=anime">Anime</a>
-						<a href="/cc_browser?themeId=ninjaanime">Ninja Anime</a>
-						<a href="/cc_browser?themeId=cc2">Lil' Peepz</a>
-						<a href="/cc_browser?themeId=chibi">Chibi Peepz</a>
-						<a href="/cc_browser?themeId=ninja">Chibi Ninjas</a>
+						<a href="/cc?themeId=chibi&amp;bs=default">Chibi Peepz</a>
+						<div></div>
+						<a href="/cc?themeId=ninja&amp;bs=default">Chibi Ninjas</a>
+						<div></div>
 					</menu>
 				</div>
 				<a href="/go_full" class="button_big">MAKE A VIDEO</a>
 			</div>
 		</div>
-		<div class="warning"><strong>I was just notified by Spark that GoAnimate Inc. wanted me to <a
-					href="https://media.discordapp.net/attachments/741394845679091792/778077861650759711/unknown.png">cease
-					development on Wrapper</a> ... again.</strong><br>This instance of Wrapper will be taken down any
-			time before
-			2020-11-17 09:00 UTC.<br><a href='https://github.com/GoAnimate-Wrapper/GoAnimate-Wrapper/projects/1'>Link
-				to a progress map of the project on GitHub</a>
+		<div class="warning">
+			.<br>Hours spent on getting importing to work so far: at least a dozen.
+			be advised that as new functionalities are being implemented,
+			software-breaking bugs will ensue.<br><a href="https://github.com/GoAnimate-Wrapper/GoAnimate-Wrapper">Link
+				to the source code on GitHub</a>
 		</div>
 	</header>
 	<table>
@@ -68,17 +57,22 @@
 				<td></td>
 			</tr>
 		</thead>
-		<tbody></tbody>
+		
 		<tfoot>
 			<tr>
-				<td colspan="127"><a id="load_more" href="javascript:;">LOAD MORE...</a></td>
+				<td colspan="127"></td>
 			</tr>
 		</tfoot>
 	</table>
-	<form enctype='multipart/form-data' action='/upload_movie' method='post'>
-		<input id='file' type="file" onchange="this.form.submit()" name='import' accept=".xml" />
+	<form enctype="multipart/form-data" action="/upload_movie" method="post">
+		<input id="file" type="file" onchange="this.form.submit()" name="import">
 	</form>
+	 
 	<script>
+		const closeReq = new XMLHttpRequest();
+		closeReq.open('GET', '/events/close');
+		closeReq.send();
+
 		var json;
 		var tbody = document.getElementsByTagName('tbody')[0];
 		var loadMore = document.getElementById('load_more');
@@ -98,7 +92,7 @@
 				const tbl = json[c];
 				const date = tbl.date.substr(0, 10) + ' ' + tbl.date.substr(11);
 				tbody.insertAdjacentHTML('beforeend',
-					'<tr><td><img src="/movie_thumbs/' + tbl.id + '.png"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>' + tbl.durationString + '</div></div></td><td><span>' + date + '</span></td><td><a href="javascript:;" onclick="popup(\'' + tbl.id + '\')"></a><a href="/go_full?movieId=' + tbl.id + '"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a></td></tr>');
+					'<tr><td><img src="/movie_thumbs/' + tbl.id + '"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>' + tbl.durationString + '</div></div></td><td><span>' + date + '</span></td><td><a href="javascript:;" onclick="popup(\'' + tbl.id + '\')"></a><a href="/go_full?movieId=' + tbl.id + '"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a></td></tr>');
 			}
 		}
 
@@ -110,7 +104,7 @@
 		}
 
 		function popup(id) {
-			window.open('/player?movieId=' + id, 'MsgWindow', 'width=1280,height=723,left=' + (screen.width / 2 - 640) + ',top=' + (screen.height / 2 - 360));
+			window.open('/player?movieId=' + id, 'MsgWindow', 'width=1280,height=720,left=' + (screen.width / 2 - 640) + ',top=' + (screen.height / 2 - 360));
 		}
 	</script>
 	<style>
@@ -131,18 +125,18 @@
 		}
 
 		header {
-			position: sticky;
+			position: fixed;
 			top: 0;
 			width: 100%;
 		}
 
 		header>:nth-child(1) {
+			height: 44px;
 			align-content: center;
 			background-color: #1e1e1e;
-			display: inline-block;
-			padding-bottom: 13px;
-			text-align: center;
 			color: #fff;
+			text-align: center;
+			display: inline-block;
 			width: 100%;
 		}
 
@@ -164,12 +158,12 @@
 
 		header>:nth-child(1)>:nth-child(2) {
 			margin-right: 20px;
-			clear: both;
+			float: right;
 		}
 
 		.button_big,
 		.button_small {
-			margin-left: 20px;
+			margin-left: 10px;
 			margin-top: 7px;
 			display: inline-block;
 			padding-top: 5px;
@@ -198,6 +192,10 @@
 			cursor: pointer;
 		}
 
+		.char_dropdown {
+			width: 200px;
+		}
+
 		.char_dropdown:hover>:nth-child(1) {
 			cursor: context-menu;
 			color: #d85e27;
@@ -210,7 +208,7 @@
 			left: 0;
 			z-index: 1000;
 			float: left;
-			width: 100%;
+			width: 190px;
 			padding: 10px 0;
 			margin: 9px 0 0;
 			list-style: none;
@@ -264,6 +262,15 @@
 			font-size: 12px;
 		}
 
+		#dark::before {
+			font-family: 'GlyphiconsRegular';
+			padding-left: 10px;
+			content: '\E190';
+			font-size: 20px;
+			color: #fff;
+			text-decoration: none;
+		}
+
 		.warning>a {
 			color: #5596e6;
 		}
@@ -274,7 +281,7 @@
 			margin-bottom: 127px;
 			margin-right: auto;
 			margin-left: auto;
-			margin-top: 70px;
+			margin-top: 127px;
 			background-color: transparent;
 			border-collapse: collapse;
 			border-spacing: 0;
@@ -285,41 +292,17 @@
 			table {
 				width: 750px;
 			}
-
-			tr>:nth-child(2)>* {
-				width: 350px;
-			}
 		}
 
 		@media(min-width: 992px) {
 			table {
 				width: 970px;
 			}
-
-			tr>:nth-child(2)>* {
-				width: 580px;
-			}
-		}
-
-		@media (min-width: 1030px) {
-			header>:nth-child(1) {
-				padding-bottom: 0;
-				height: 44px;
-			}
-
-			header>:nth-child(1)>:nth-child(2) {
-				clear: none;
-				float: right;
-			}
 		}
 
 		@media(min-width: 1200px) {
 			table {
 				width: 1170px;
-			}
-
-			tr>:nth-child(2)>* {
-				width: 780px;
 			}
 		}
 
@@ -363,17 +346,12 @@
 			color: #999;
 		}
 
-		tr>:nth-child(2)>:nth-child(1) {
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
 		tr>:nth-child(2)>:nth-child(2) {
 			font-family: monospace;
 		}
 
 		tr>:nth-child(3) {
-			width: 200px;
+			width: 250px;
 		}
 
 		tr>:nth-child(3)>* {
@@ -467,4 +445,4 @@
 			font-style: normal;
 		}
 	</style>
-</body>
+<div id="overlay_hdlanemkpfkbknnmonkdmfkcealhhmai" style="position: fixed; width: 100%; height: 100%; top: 0; display: none; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 9999999; cursor: pointer; " onclick="this.style.display='none'"></div><input type="file" id="" name="file" style="display: none;"><div data-v-0a2a5063="" class="container_selected_area" style="cursor: url(&quot;chrome-extension://ialiedlpfknneamnbemcgmaboleiccdd/assets/images/cursor-imagen.svg&quot;) 9 9, crosshair;"><div data-v-0a2a5063="" class="area"></div></div></body>
